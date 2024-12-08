@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
@@ -33,6 +34,14 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre('save', async function saveUser(next) {
   const user = this;
+  // Generate salt
+  const SALT = bcrypt.genSaltSync(9);
+
+  // Hash the password using the generated salt
+  const hashedPassword = bcrypt.hashSync(user.password, SALT);
+
+  // Assign the hashed password back to the user object
+  user.password = hashedPassword;
   user.avator = `https://robohash.org/${user.username}`;
   next();
 });

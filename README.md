@@ -58,3 +58,15 @@ for readme file Github(https://github.com/lydell/eslint-plugin-simple-import-sor
 
 Robohash is a easy web service that makes it easy to provide unique, robot/alien/monster/whatever images for any text.
 Put in any text, such as IP address, email, filename, userid, or whatever else you like, and get back a pretty image for your site.(https://robohash.org/)
+
+# jsonwebtoken
+
+An implementation of JSON Web Tokens.
+This was developed against draft-ietf-oauth-json-web-token-08. It makes use of node-jws
+-> npm i jsonwebtoken
+
+# bcrypt
+
+A library to help you hash passwords.
+You can read about bcrypt in Wikipedia as well as in the following article: How To Safely Store A Password
+-> npm i bcrypt
