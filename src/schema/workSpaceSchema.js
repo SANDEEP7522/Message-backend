@@ -11,14 +11,14 @@ const workspaceSchema = new mongoose.Schema(
       type: String,
       trim: true // Optional description of the workspace
     },
-    owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: '', // References the User who owns the workspace
-      required: true
-    },
+    //     owner: {
+    //       type: mongoose.Schema.Types.ObjectId,
+    //       ref: '', // References the User who owns the workspace
+    //       required: true
+    //     },
     members: [
       {
-        menberId: {
+        memberId: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'User' // List of users who are part of the workspace
         },

@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import User from '../schema/userSchema.js';
 import Workspace from '../schema/workSpaceSchema.js';
 import ClientError from '../utils/error/clientError.js';
+import channelRepository from './channelRepository.js';
 import crudRepository from './crudRepository.js';
 
 const workspaceRepositries = {
@@ -62,10 +63,10 @@ const workspaceRepositries = {
 
     // is member is already in work space
     const isMemberIsAlreadyPartOfWorkspace = workspace.members.find(
-      (member) => member.menberId == memberId
+      (member) => member.memberId == memberId
     );
 
-    if (!isMemberIsAlreadyPartOfWorkspace) {
+    if (isMemberIsAlreadyPartOfWorkspace) {
       throw new ClientError({
         explanation: 'Invalis data send from client',
         message: 'User Already part of WORKSPACE',
@@ -85,7 +86,40 @@ const workspaceRepositries = {
     return workspace;
   },
 
-  addChannelToWorkspace: async function () {},
+  addChannelToWorkspace: async function (workspaceId, channelName) {
+    const workspace =
+      await Workspace.findById(workspaceId).populate('channelIds');
+
+    if (!workspace) {
+      throw new ClientError({
+        explanation: 'Invalis data send from client',
+        message: 'User Already part of WORKSPACE',
+        StatusCode: StatusCodes.FORBIDDEN
+      });
+    }
+
+    const isChannelIsAlreadyPartOfWorkspace = workspace.channels.find(
+      (channel) => channel.name == channelName
+    );
+
+    if (isChannelIsAlreadyPartOfWorkspace) {
+      throw new ClientError({
+        explanation: 'Invalis data send from client',
+        message: 'Channel is Already part of WORKSPACE',
+        StatusCode: StatusCodes.FORBIDDEN
+      });
+    }
+
+    const channel = await channelRepository.create({
+      name: channelName
+    });
+
+    workspace.chennals.push(channel);
+
+    await workspace.save();
+
+    return workspace;
+  },
 
   fetchAllWorkspaceByMemberId: async function () {}
 };
