@@ -121,7 +121,13 @@ const workspaceRepositries = {
     return workspace;
   },
 
-  fetchAllWorkspaceByMemberId: async function () {}
+  fetchAllWorkspaceByMemberId: async function (memberId) {
+     const workspases = await Workspace.find({
+      'members.memberId' : memberId
+     }).populate('members.memberId', 'username email avatart'); 
+
+     return workspases;
+  }
 };
 
 export default workspaceRepositries;
