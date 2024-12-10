@@ -7,7 +7,7 @@ const messageSchema = new mongoose.Schema(
       required: [true, 'message body is required']
     },
     images: {
-      type: [String] // Allows multiple images as an array of URLs or file paths
+      type: String // Allows multiple images as an array of URLs or file paths
     },
     channelId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -16,12 +16,13 @@ const messageSchema = new mongoose.Schema(
     },
     senderId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Channel',
+      ref: 'User',
       required: [true, 'senderId is required']
     },
     workspaceId: {
-      trpe: mongoose.Schema.Types.ObjectId,
-      ref: 'Workspace'
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Workspace',
+      required: [true, 'Workspace ID is required']
     }
   },
   { timestamps: true }

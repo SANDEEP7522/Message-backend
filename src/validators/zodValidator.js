@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { customErrorRespose } from '../utils/common/responseObject.js';
+import { customErrorResponse } from '../utils/common/responseObject.js';
 export const validation = (schema) => {
   return async (req, res, next) => {
     try {
@@ -20,7 +20,7 @@ export const validation = (schema) => {
       });
 
       res.status(StatusCodes.BAD_REQUEST).json(
-        customErrorRespose({
+        customErrorResponse({
           message: 'Validation error' + errorMessage,
           explanation: explanation
         })

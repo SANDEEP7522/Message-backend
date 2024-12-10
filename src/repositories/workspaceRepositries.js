@@ -88,45 +88,36 @@ const workspaceRepositries = {
 
   addChannelToWorkspace: async function (workspaceId, channelName) {
     const workspace =
-      await Workspace.findById(workspaceId).populate('channelIds');
-
+      await Workspace.findById(workspaceId).populate('channels');
     if (!workspace) {
       throw new ClientError({
-        explanation: 'Invalis data send from client',
-        message: 'User Already part of WORKSPACE',
-        StatusCode: StatusCodes.FORBIDDEN
+        explanation: 'Invalid data sent from the client',
+        message: 'Workspace not found',
+        statusCode: StatusCodes.NOT_FOUND
       });
     }
-
-    const isChannelIsAlreadyPartOfWorkspace = workspace.channels.find(
-      (channel) => channel.name == channelName
+    const isChannelAlreadyPartOfWorkspace = workspace.channels.find(
+      (channel) => channel.name === channelName
     );
-
-    if (isChannelIsAlreadyPartOfWorkspace) {
+    if (isChannelAlreadyPartOfWorkspace) {
       throw new ClientError({
-        explanation: 'Invalis data send from client',
-        message: 'Channel is Already part of WORKSPACE',
-        StatusCode: StatusCodes.FORBIDDEN
+        explanation: 'Invalid data sent from client',
+        message: 'Channel already part of workspace',
+        statusCode: StatusCodes.FORBIDDEN
       });
     }
-
-    const channel = await channelRepository.create({
-      name: channelName
-    });
-
-    workspace.chennals.push(channel);
-
+    const channel = await channelRepository.create({ name: channelName });
+    workspace.channels.push(channel);
     await workspace.save();
-
     return workspace;
   },
 
   fetchAllWorkspaceByMemberId: async function (memberId) {
-     const workspases = await Workspace.find({
-      'members.memberId' : memberId
-     }).populate('members.memberId', 'username email avatart'); 
+    const workspases = await Workspace.find({
+      'members.memberId': memberId
+    }).populate('members.memberId', 'username email avatart');
 
-     return workspases;
+    return workspases;
   }
 };
 

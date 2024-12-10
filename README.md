@@ -70,3 +70,9 @@ This was developed against draft-ietf-oauth-json-web-token-08. It makes use of n
 A library to help you hash passwords.
 You can read about bcrypt in Wikipedia as well as in the following article: How To Safely Store A Password
 -> npm i bcrypt
+
+# UUID stands for Universally Unique Identifier.
+
+It is a 128-bit number used to uniquely identify information in computer systems. UUIDs are generated using a combination of timestamp, MAC address, and random numbers. They are commonly used in distributed systems to uniquely identify resources, such as database records or network packets.
+
+-> npi i uuid

@@ -1,8 +1,8 @@
-import Chennal from '../schema/channelSchema.js';
+import Channel from '../schema/channelSchema.js';
 import crudRepository from './crudRepository.js';
 
 const channelRepository = {
-  ...crudRepository(Chennal)
+  ...crudRepository(Channel)
 };
 
 export default channelRepository;
