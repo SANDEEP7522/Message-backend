@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const workspaceSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Workname is required'], 
+    required: [true, 'Workname is required'],
     unique: true
   },
   description: {

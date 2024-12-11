@@ -45,3 +45,14 @@ export const createWorkspaceService = async (workspaceData) => {
     throw error;
   }
 };
+
+export const getWorkspaceUserIsMemberOfService = async (userId) => {
+  try {
+    const response =
+      await workspaceRepository.fetchAllWorkspaceByMemberId(userId);
+    return response;
+  } catch (error) {
+    console.log('get workspace user is member of service error', error);
+    throw error;
+  }
+};
