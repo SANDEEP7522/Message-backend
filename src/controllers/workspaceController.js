@@ -14,6 +14,7 @@ export const createWorkspaceController = async (req, res) => {
       ...req.body,
       owner: req.user
     });
+    
     return res
       .status(StatusCodes.CREATED)
       .json(successResponse(response, 'Workspace created successfully'));
@@ -22,6 +23,7 @@ export const createWorkspaceController = async (req, res) => {
     if (error.statusCode) {
       return res.status(error.statusCode).json(customErrorResponse(error));
     }
+
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json(internalErrorResponse(error));

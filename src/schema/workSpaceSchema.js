@@ -3,17 +3,13 @@ import mongoose from 'mongoose';
 const workspaceSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Workname is required'], // Workspace name is mandatory
+    required: [true, 'Workname is required'], 
     unique: true
   },
   description: {
     type: String
   },
-  //     owner: {
-  //       type: mongoose.Schema.Types.ObjectId,
-  //       ref: '', // References the User who owns the workspace
-  //       required: true
-  //     },
+
   members: [
     {
       memberId: {
