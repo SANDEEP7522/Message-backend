@@ -85,7 +85,7 @@ export const deleteWorkspaceService = async (workspaceId, userId) => {
     console.log(workspace.members, userId);
 
     const isAllowed = workspace.members.find(
-      (member) => member.membeId.toString() == userId && member.role == 'admin'
+      (member) => member.memberId.toString() === userId && member.role === 'admin'
     );
     if (isAllowed) {
       await channelRepository.deleteMany(workspace.channels);
