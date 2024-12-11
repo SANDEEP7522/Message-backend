@@ -2,10 +2,12 @@ import { StatusCodes } from 'http-status-codes';
 import { v4 as uuidv4 } from 'uuid';
 
 import channelRepository from '../repositories/channelRepository.js';
+import userRepository from '../repositories/userRepository.js';
 import workspaceRepository from '../repositories/workspaceRepositries.js';
 import ClientError from '../utils/error/clientError.js';
 import ValidationError from '../utils/error/validationError.js';
 
+// This function checks if a user with the given userId is an admin of a specific workspace
 const isUserAdminOfWorkspace = async (workspace, userId) => {
   return workspace.members.find(
     (member) => member.memberId.toString() === userId && member.role === 'admin'
@@ -15,6 +17,12 @@ const isUserAdminOfWorkspace = async (workspace, userId) => {
 const isUserMemberOfWorkspace = async (workspace, userId) => {
   return workspace.members.find(
     (member) => member.memberId.toString() === userId
+  );
+};
+
+const isChannelIsPartOfWorkspace = async (workspace, channelName) => {
+  return workspace.channels.find(
+    (channel) => channel.name.toLowerCase() === channelName.toLowerCase()
   );
 };
 
@@ -146,10 +154,160 @@ export const getWorkspaceService = async (workspaceId, userId) => {
   }
 };
 
-// export const getWorkspaceByJoinCodeService = async (joinCode) => {}
+export const getWorkspaceByJoinCodeService = async (joinCode, userId) => {
+  try {
+    const workspace = await workspaceRepository.getById(joinCode);
+    if (!workspace) {
+      throw new ClientError({
+        explanation: 'Invalid data sent from the client',
+        message: 'Workspace not found',
+        statusCode: StatusCodes.NOT_FOUND
+      });
+    }
 
-// export const updatedWorkspaceService = async (workspaceId, workspaceData, userId) => {}
+    const isMember = await isUserMemberOfWorkspace(workspace, userId);
+    if (!isMember) {
+      throw new ClientError({
+        explanation: 'User not member of workspace',
+        message: 'User not membet of the work space',
+        statusCode: StatusCodes.UNAUTHORIZED
+      });
+    }
 
-// export const addMemberToWorkspaceService = async (workspaceId, memberId, role) => {}
+    return workspace;
+  } catch (error) {
+    console.log('Get workspace By join code service error', error);
+    throw error;
+  }
+};
 
-// export const addChannelToWorkspaceService = async (workspaceId, channelName) => {}
+export const updatedWorkspaceService = async (
+  workspaceId,
+  workspaceData,
+  userId
+) => {
+  try {
+    const workspace = await workspaceRepository.getById(workspaceId);
+    if (!workspace) {
+      throw new ClientError({
+        explanation: 'Invalid data sent from the client',
+        message: 'Workspace not found',
+        statusCode: StatusCodes.NOT_FOUND
+      });
+    }
+
+    const isMember = await isUserMemberOfWorkspace(workspace, userId);
+    if (!isMember) {
+      throw new ClientError({
+        explanation: 'User not member of workspace',
+        message: 'User not membet of the work space',
+        statusCode: StatusCodes.UNAUTHORIZED
+      });
+    }
+
+    const updatedWorkspace = await workspaceRepository.update(
+      workspaceId,
+      workspaceData
+    );
+
+    return updatedWorkspace;
+  } catch (error) {
+    console.log('Get update workspace service error', error);
+    throw error;
+  }
+};
+
+export const addMemberToWorkspaceService = async (
+  workspaceId,
+  memberId,
+  role
+) => {
+  try {
+    const workspace = await workspaceRepository.getById(workspaceId);
+    if (!workspace) {
+      throw new ClientError({
+        explanation: 'Invalid data sent from the client',
+        message: 'Workspace not found',
+        statusCode: StatusCodes.NOT_FOUND
+      });
+    }
+
+    const isValidUser = await userRepository.getById(memberId);
+    if (!isValidUser) {
+      throw new ClientError({
+        explanation: 'Invalid data sent from the client',
+        message: 'Workspace not found',
+        statusCode: StatusCodes.NOT_FOUND
+      });
+    }
+
+    const isMember = await isUserMemberOfWorkspace(workspaceId, memberId);
+    if (!isMember) {
+      throw new ClientError({
+        explanation: 'User not member of workspace',
+        message: 'User is not membet of the work space',
+        statusCode: StatusCodes.UNAUTHORIZED
+      });
+    }
+
+    const response = await workspaceRepository.addMemberToWorkspace(
+      workspaceId,
+      memberId,
+      role
+    );
+    return response;
+  } catch (error) {
+    console.log('Add Member To Workspace service error', error);
+    throw error;
+  }
+};
+
+export const addChannelToWorkspaceService = async (
+  workspaceId,
+  userId,
+  channelName
+) => {
+  try {
+    const workspace =
+      await workspaceRepository.getWorkspaceDetailsById(workspaceId);
+    if (!workspace) {
+      throw new ClientError({
+        explanation: 'Invalid data sent from the client',
+        message: 'Workspace not found',
+        statusCode: StatusCodes.NOT_FOUND
+      });
+    }
+
+    const isAdmin = await isUserMemberOfWorkspace(workspace, userId);
+    if (!isAdmin) {
+      throw new ClientError({
+        explanation: 'User is not admin of the workspace',
+        message: 'User is  not admin of the work space',
+        statusCode: StatusCodes.UNAUTHORIZED
+      });
+    }
+
+    const isChannelAlreadyPartOfWorkspace = isChannelIsPartOfWorkspace(
+      workspaceId,
+      channelName
+    );
+
+    if (!isChannelAlreadyPartOfWorkspace) {
+      throw new ClientError({
+        explanation: 'Invalid data sent from the client',
+        message: 'channel is already part of workspace',
+        statusCode: StatusCodes.NOT_FOUND
+      });
+    }
+
+    const response = await workspaceRepository.addChannelToWorkspace(
+      workspaceId,
+      channelName
+    );
+
+    return response;
+  } catch (error) {
+    console.log('Add channel to workspace service error', error);
+    throw error;
+  }
+};
