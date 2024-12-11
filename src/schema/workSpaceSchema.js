@@ -3,20 +3,18 @@ import mongoose from 'mongoose';
 const workspaceSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Workname is required'],
+    required: [true, 'Workspace name is required'],
     unique: true
   },
   description: {
     type: String
   },
-
   members: [
     {
       memberId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User' // List of users who are part of the workspace
+        ref: 'User'
       },
-
       role: {
         type: String,
         enum: ['admin', 'member'],
@@ -26,7 +24,7 @@ const workspaceSchema = new mongoose.Schema({
   ],
   joinCode: {
     type: String,
-    required: [true, 'join code is required']
+    required: [true, 'Join code is required']
   },
   channels: [
     {

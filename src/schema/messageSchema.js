@@ -1,32 +1,29 @@
 import mongoose from 'mongoose';
 
-const messageSchema = new mongoose.Schema(
-  {
-    body: {
-      type: String,
-      required: [true, 'message body is required']
-    },
-    images: {
-      type: String // Allows multiple images as an array of URLs or file paths
-    },
-    channelId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Channel',
-      required: [true, 'channel is required']
-    },
-    senderId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'senderId is required']
-    },
-    workspaceId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Workspace',
-      required: [true, 'Workspace ID is required']
-    }
+const messageSchema = new mongoose.Schema({
+  body: {
+    type: String,
+    required: [true, 'Message body is required']
   },
-  { timestamps: true }
-);
+  image: {
+    type: String
+  },
+  channelId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Channel',
+    required: [true, 'Channel ID is required']
+  },
+  senderId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: [true, 'Sender ID is required']
+  },
+  workspaceId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Workspace',
+    required: [true, 'Workspace ID is required']
+  }
+});
 
 const Message = mongoose.model('Message', messageSchema);
 

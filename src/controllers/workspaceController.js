@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import {
   createWorkspaceService,
+  deleteWorkspaceService,
   getWorkspaceUserIsMemberOfService
 } from '../services/workspaceService.js';
 import {
@@ -13,16 +14,19 @@ import {
 // This code is likely used in a RESTful API, It handles a request to create a new workspace
 export const createWorkspaceController = async (req, res) => {
   try {
+    // Log incoming data to see if workspaceId or other expected data is missing
+    console.log('Request body:', req.body);
+
     const response = await createWorkspaceService({
       ...req.body,
       owner: req.user
     });
-
     return res
       .status(StatusCodes.CREATED)
       .json(successResponse(response, 'Workspace created successfully'));
   } catch (error) {
-    console.log(error);
+    console.log('Error in createWorkspaceController:', error); // Log any error here
+
     if (error.statusCode) {
       return res.status(error.statusCode).json(customErrorResponse(error));
     }
@@ -48,5 +52,28 @@ export const getWorkspaceUserIsMemberOfController = async (req, res) => {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json(internalErrorResponse, 'Internal Server Error');
+  }
+};
+
+export const deleteWorkspaceController = async (req, res) => {
+  try {
+    const response = await deleteWorkspaceService(
+      req.params.workspaceId,
+      req.user
+    );
+    console.log('Response from deleteWorkspaceService:', response);
+
+    return res
+      .status(StatusCodes.OK)
+      .json(successResponse(response, 'Workspace deleted successfully'));
+  } catch (error) {
+    console.log(error);
+    if (error.statusCode) {
+      return res.status(error.statusCode).json(customErrorResponse(error));
+    }
+
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(internalErrorResponse(error));
   }
 };
