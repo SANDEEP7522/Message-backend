@@ -9,9 +9,17 @@ import ValidationError from '../utils/error/validationError.js';
 
 // This function checks if a user with the given userId is an admin of a specific workspace
 const isUserAdminOfWorkspace = async (workspace, userId) => {
-  return workspace.members.find(
-    (member) => member.memberId.toString() === userId && member.role === 'admin'
+  console.log(workspace.members, userId);
+  
+  const response = workspace.members.find(
+    (member) =>
+      (member.memberId.toString() === userId ||
+        member.memberId._id.toString() === userId) &&
+      member.role === 'admin'
   );
+  console.log(response);
+  return response;
+  
 };
 
 const isUserMemberOfWorkspace = async (workspace, userId) => {
@@ -215,7 +223,8 @@ export const updateWorkspaceService = async (
 export const addMemberToWorkspaceService = async (
   workspaceId,
   memberId,
-  role
+  role,
+  userId
 ) => {
   try {
     const workspace = await workspaceRepository.getById(workspaceId);
@@ -227,6 +236,15 @@ export const addMemberToWorkspaceService = async (
       });
     }
 
+   const isAdmin = isUserAdminOfWorkspace(workspace, userId);
+   if (!isAdmin) {
+    throw new ClientError({
+      explanation: 'User is not an admin of the workspace',
+      message: 'User is not an admin of the workspace',
+      statusCode: StatusCodes.NOT_FOUND
+    });
+   }
+
     const isValidUser = await userRepository.getById(memberId);
     if (!isValidUser) {
       throw new ClientError({
@@ -236,6 +254,7 @@ export const addMemberToWorkspaceService = async (
       });
     }
 
+console.log("add channel to workSpace", workspaceId, userId);
     const isMember = await isUserMemberOfWorkspace(workspaceId, memberId);
     if (!isMember) {
       throw new ClientError({
@@ -244,6 +263,7 @@ export const addMemberToWorkspaceService = async (
         statusCode: StatusCodes.UNAUTHORIZED
       });
     }
+console.log('add channel to workspace', workspaceId, channelName);
 
     const response = await workspaceRepository.addMemberToWorkspace(
       workspaceId,

@@ -1,6 +1,7 @@
 import express from 'express';
 
 import {
+  addChannelToWorkspaceController,
   addMemberToWorkspaceController,
   createWorkspaceController,
   deleteWorkspaceController,
@@ -41,5 +42,11 @@ router.put(
   isAuthenticated,
   addMemberToWorkspaceController
 );
+
+
+router.put('/:workspaceId/channels', isAuthenticated, addChannelToWorkspaceController);
+
+
+
 
 export default router;
