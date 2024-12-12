@@ -1,6 +1,7 @@
 import express from 'express';
 
 import {
+  addMemberToWorkspaceController,
   createWorkspaceController,
   deleteWorkspaceController,
   getWorkspaceByJoinCodeController,
@@ -34,5 +35,11 @@ router.get(
 );
 
 router.put('/:workspaceId', isAuthenticated, updateWorkspaceController);
+
+router.put(
+  '/:workspaceId/member',
+  isAuthenticated,
+  addMemberToWorkspaceController
+);
 
 export default router;
