@@ -10,8 +10,8 @@ export default function crudRepository(model) {
       return allDocs;
     },
 
-    getById: async function (id) {
-      const doc = await model.findById(id);
+    getById: async function (id1) {
+      const doc = await model.findById( id1);
       return doc;
     },
 

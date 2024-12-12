@@ -5,7 +5,8 @@ import {
   deleteWorkspaceService,
   getWorkspaceByJoinCodeService,
   getWorkspaceService,
-  getWorkspaceUserIsMemberOfService
+  getWorkspaceUserIsMemberOfService,
+  updateWorkspaceService
 } from '../services/workspaceService.js';
 import {
   customErrorResponse,
@@ -103,6 +104,7 @@ export const getWorkspaceController = async function (req, res) {
   }
 };
 
+// here some problem
 export const getWorkspaceByJoinCodeController = async (req, res) => {
   try {
     const response = await getWorkspaceByJoinCodeService(
@@ -117,6 +119,28 @@ export const getWorkspaceByJoinCodeController = async (req, res) => {
     if (error.statusCode) {
       return res.status(error.statusCode).json(customErrorResponse(error));
     }
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(internalErrorResponse(error));
+  }
+};
+
+export const updateWorkspaceController = async (req, res) => {
+  try {
+    const response = await updateWorkspaceService(
+      req.params.workspaceId,
+      req.body,
+      req.user
+    );
+    return res
+      .status(StatusCodes.OK)
+      .json(successResponse(response, 'Workspace updated successfully'));
+  } catch (error) {
+    console.log('update workspace controller error', error);
+    if (error.statusCode) {
+      return res.status(error.statusCode).json(customErrorResponse(error));
+    }
+
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json(internalErrorResponse(error));

@@ -5,7 +5,8 @@ import {
   deleteWorkspaceController,
   getWorkspaceByJoinCodeController,
   getWorkspaceController,
-  getWorkspaceUserIsMemberOfController
+  getWorkspaceUserIsMemberOfController,
+  updateWorkspaceController
 } from '../../controllers/workspaceController.js';
 import { isAuthenticated } from '../../middlewares/authMiddleware.js';
 import { createWorkspaceSchema } from '../../validators/workspaceSchema.js';
@@ -31,5 +32,7 @@ router.get(
   isAuthenticated,
   getWorkspaceByJoinCodeController
 );
+
+router.put('/:workspaceId', isAuthenticated, updateWorkspaceController);
 
 export default router;

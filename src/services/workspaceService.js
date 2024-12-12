@@ -179,7 +179,7 @@ export const getWorkspaceByJoinCodeService = async (joinCode, userId) => {
   }
 };
 
-export const updatedWorkspaceService = async (
+export const updateWorkspaceService = async (
   workspaceId,
   workspaceData,
   userId
@@ -193,24 +193,21 @@ export const updatedWorkspaceService = async (
         statusCode: StatusCodes.NOT_FOUND
       });
     }
-
-    const isMember = await isUserMemberOfWorkspace(workspace, userId);
-    if (!isMember) {
+    const isAdmin = isUserAdminOfWorkspace(workspace, userId);
+    if (!isAdmin) {
       throw new ClientError({
-        explanation: 'User not member of workspace',
-        message: 'User not membet of the work space',
+        explanation: 'User is not an admin of the workspace',
+        message: 'User is not an admin of the workspace',
         statusCode: StatusCodes.UNAUTHORIZED
       });
     }
-
     const updatedWorkspace = await workspaceRepository.update(
       workspaceId,
       workspaceData
     );
-
     return updatedWorkspace;
   } catch (error) {
-    console.log('Get update workspace service error', error);
+    console.log('update workspace service error', error);
     throw error;
   }
 };
