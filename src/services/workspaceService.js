@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import channelRepository from '../repositories/channelRepository.js';
 import userRepository from '../repositories/userRepository.js';
-import workspaceRepository from '../repositories/workspaceRepositries.js';
+import workspaceRepository from '../repositories/workspaceRepository.js';
 import ClientError from '../utils/error/clientError.js';
 import ValidationError from '../utils/error/validationError.js';
 
@@ -105,7 +105,7 @@ export const deleteWorkspaceService = async (workspaceId, userId) => {
     }
     console.log(workspace.members, userId);
 
-    const isAllowed = isUserAdminOfWorkspace(workspaceId, userId);
+    const isAllowed = isUserAdminOfWorkspace(workspace, userId);
 
     if (isAllowed) {
       await channelRepository.deleteMany(workspace.channels);
@@ -141,8 +141,8 @@ export const getWorkspaceService = async (workspaceId, userId) => {
 
     if (!isMember) {
       throw new ClientError({
-        explanation: 'User not member of workspace',
-        message: 'User not membet of the work space',
+        explanation: 'User already member of workspace',
+        message: 'User not already member of the work space',
         statusCode: StatusCodes.UNAUTHORIZED
       });
     }
@@ -153,10 +153,10 @@ export const getWorkspaceService = async (workspaceId, userId) => {
     throw error;
   }
 };
-
 export const getWorkspaceByJoinCodeService = async (joinCode, userId) => {
   try {
-    const workspace = await workspaceRepository.getById(joinCode);
+    const workspace =
+      await workspaceRepository.getWorkspaceByJoinCode(joinCode);
     if (!workspace) {
       throw new ClientError({
         explanation: 'Invalid data sent from the client',
@@ -164,19 +164,17 @@ export const getWorkspaceByJoinCodeService = async (joinCode, userId) => {
         statusCode: StatusCodes.NOT_FOUND
       });
     }
-
-    const isMember = await isUserMemberOfWorkspace(workspace, userId);
+    const isMember = isUserMemberOfWorkspace(workspace, userId);
     if (!isMember) {
       throw new ClientError({
-        explanation: 'User not member of workspace',
-        message: 'User not membet of the work space',
+        explanation: 'User is not a member of the workspace',
+        message: 'User is not a member of the workspace',
         statusCode: StatusCodes.UNAUTHORIZED
       });
     }
-
     return workspace;
   } catch (error) {
-    console.log('Get workspace By join code service error', error);
+    console.log('Get workspace by join code service error', error);
     throw error;
   }
 };
@@ -242,10 +240,10 @@ export const addMemberToWorkspaceService = async (
     }
 
     const isMember = await isUserMemberOfWorkspace(workspaceId, memberId);
-    if (isMember) {
+    if (!isMember) {
       throw new ClientError({
-        explanation: 'User is already member of workspace',
-        message: 'User is already membet of the work space',
+        explanation: 'User not member of workspace',
+        message: 'User is not membet of the work space',
         statusCode: StatusCodes.UNAUTHORIZED
       });
     }

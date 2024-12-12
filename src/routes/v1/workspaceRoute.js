@@ -3,6 +3,7 @@ import express from 'express';
 import {
   createWorkspaceController,
   deleteWorkspaceController,
+  getWorkspaceByJoinCodeController,
   getWorkspaceController,
   getWorkspaceUserIsMemberOfController
 } from '../../controllers/workspaceController.js';
@@ -24,5 +25,11 @@ router.get('/', isAuthenticated, getWorkspaceUserIsMemberOfController);
 router.delete('/:workspaceId', isAuthenticated, deleteWorkspaceController);
 
 router.get('/:workspaceId', isAuthenticated, getWorkspaceController);
+
+router.get(
+  '/join/:joinCoide',
+  isAuthenticated,
+  getWorkspaceByJoinCodeController
+);
 
 export default router;
