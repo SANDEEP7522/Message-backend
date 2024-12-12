@@ -43,10 +43,10 @@ router.put(
   addMemberToWorkspaceController
 );
 
-
-router.put('/:workspaceId/channels', isAuthenticated, addChannelToWorkspaceController);
-
-
-
+router.put(
+  '/:workspaceId/channels',
+  isAuthenticated,
+  addChannelToWorkspaceController
+);
 
 export default router;

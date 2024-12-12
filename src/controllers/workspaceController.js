@@ -174,8 +174,6 @@ export const addMemberToWorkspaceController = async (req, res) => {
   }
 };
 
-
-
 export const addChannelToWorkspaceController = async (req, res) => {
   try {
     const response = await addChannelToWorkspaceService(

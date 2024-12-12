@@ -1,4 +1,4 @@
-import { number, z } from 'zod';
+import { z } from 'zod';
 
 export const createWorkspaceSchema = z.object({
   name: z.string().min(3).max(50)
@@ -6,8 +6,8 @@ export const createWorkspaceSchema = z.object({
 
 export const addMemberToWorkspaceSchema = z.object({
   numberId: z.string()
-})
+});
 
 export const addChannelToWorkspaceSchema = z.object({
   channelName: z.string()
-})
+});

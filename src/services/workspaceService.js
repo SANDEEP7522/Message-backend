@@ -10,7 +10,7 @@ import ValidationError from '../utils/error/validationError.js';
 // This function checks if a user with the given userId is an admin of a specific workspace
 const isUserAdminOfWorkspace = async (workspace, userId) => {
   console.log(workspace.members, userId);
-  
+
   const response = workspace.members.find(
     (member) =>
       (member.memberId.toString() === userId ||
@@ -19,7 +19,6 @@ const isUserAdminOfWorkspace = async (workspace, userId) => {
   );
   console.log(response);
   return response;
-  
 };
 
 const isUserMemberOfWorkspace = async (workspace, userId) => {
@@ -236,14 +235,14 @@ export const addMemberToWorkspaceService = async (
       });
     }
 
-   const isAdmin = isUserAdminOfWorkspace(workspace, userId);
-   if (!isAdmin) {
-    throw new ClientError({
-      explanation: 'User is not an admin of the workspace',
-      message: 'User is not an admin of the workspace',
-      statusCode: StatusCodes.NOT_FOUND
-    });
-   }
+    const isAdmin = isUserAdminOfWorkspace(workspace, userId);
+    if (!isAdmin) {
+      throw new ClientError({
+        explanation: 'User is not an admin of the workspace',
+        message: 'User is not an admin of the workspace',
+        statusCode: StatusCodes.NOT_FOUND
+      });
+    }
 
     const isValidUser = await userRepository.getById(memberId);
     if (!isValidUser) {
@@ -254,7 +253,7 @@ export const addMemberToWorkspaceService = async (
       });
     }
 
-console.log("add channel to workSpace", workspaceId, userId);
+    console.log('add channel to workSpace', workspaceId, userId);
     const isMember = await isUserMemberOfWorkspace(workspaceId, memberId);
     if (!isMember) {
       throw new ClientError({
@@ -263,7 +262,7 @@ console.log("add channel to workSpace", workspaceId, userId);
         statusCode: StatusCodes.UNAUTHORIZED
       });
     }
-console.log('add channel to workspace', workspaceId, channelName);
+    console.log('add channel to workspace', workspaceId, memberId);
 
     const response = await workspaceRepository.addMemberToWorkspace(
       workspaceId,
