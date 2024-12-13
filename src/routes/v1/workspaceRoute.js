@@ -30,7 +30,7 @@ router.delete('/:workspaceId', isAuthenticated, deleteWorkspaceController);
 router.get('/:workspaceId', isAuthenticated, getWorkspaceController);
 
 router.get(
-  '/join/:joinCoide',
+  '/join/:joinCode',
   isAuthenticated,
   getWorkspaceByJoinCodeController
 );

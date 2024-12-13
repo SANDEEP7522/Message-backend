@@ -192,7 +192,16 @@ export const updateWorkspaceService = async (
   userId
 ) => {
   try {
+    console.log('Starting updateWorkspaceService with:', {
+      workspaceId,
+      workspaceData,
+      userId
+    });
+
     const workspace = await workspaceRepository.getById(workspaceId);
+
+    console.log('workspace', workspace);
+
     if (!workspace) {
       throw new ClientError({
         explanation: 'Invalid data sent from the client',
@@ -212,6 +221,12 @@ export const updateWorkspaceService = async (
       workspaceId,
       workspaceData
     );
+
+    console.log(
+      'updated workspace for update work space service',
+      updatedWorkspace
+    );
+
     return updatedWorkspace;
   } catch (error) {
     console.log('update workspace service error', error);

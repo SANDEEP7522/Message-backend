@@ -106,9 +106,12 @@ export const getWorkspaceController = async function (req, res) {
   }
 };
 
-// here some problem
+// completed here problem
 export const getWorkspaceByJoinCodeController = async (req, res) => {
   try {
+    console.log('Request params:', req.params);
+    console.log('Join code:', req.params.joinCode);
+
     const response = await getWorkspaceByJoinCodeService(
       req.params.joinCode,
       req.user
@@ -129,6 +132,10 @@ export const getWorkspaceByJoinCodeController = async (req, res) => {
 
 export const updateWorkspaceController = async (req, res) => {
   try {
+    console.log('Request params:', req.params.workspaceId);
+    console.log('Request body:', req.body); // here no problem
+    console.log('Request user:', req.body);
+
     const response = await updateWorkspaceService(
       req.params.workspaceId,
       req.body,

@@ -31,6 +31,8 @@ const workspaceRepository = {
     return workspace;
   },
   getWorkspaceByJoinCode: async function (joinCode) {
+    console.log('Join code received:', joinCode); // here say undefined
+
     const workspace = await Workspace.findOne({
       joinCode
     });
@@ -45,6 +47,7 @@ const workspaceRepository = {
 
     return workspace;
   },
+
   addMemberToWorkspace: async function (workspaceId, memberId, role) {
     const workspace = await Workspace.findById(workspaceId);
 

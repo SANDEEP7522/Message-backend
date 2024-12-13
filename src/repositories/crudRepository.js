@@ -11,7 +11,9 @@ export default function crudRepository(model) {
     },
 
     getById: async function (id) {
+      console.log('id:', id);
       const doc = await model.findById(id);
+      console.log('doc:', doc);
       return doc;
     },
 
