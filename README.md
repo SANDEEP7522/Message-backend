@@ -93,3 +93,15 @@ Using the email accounts registered with EmailEngine, you can receive and send e
 # App Password
 
 (https://myaccount.google.com/apppasswords?pli=1&rapt=AEjHL4O5Yk4CrAKFbxjtn4008vndiv_sEgfLr7yIdFHD8STSZEQi0iWGgNh47LcX9q9sKafAHGtHk68_DwuvlvoZbiLm-EAkDQKSrYyUkvePJ0QCkojJ9Fc)
+
+# Radis server
+
+ioredis is a high-performance Redis client for Node.js, supporting Redis clustering, Sentinel, Pub/Sub, Lua scripting, and pipelining. It allows asynchronous operations, providing fast data retrieval, caching, and real-time messaging. Ideal for scalable applications, ioredis automatically handles reconnections, cluster management, and failover, ensuring reliability and efficiency in production environments.
+
+-> npm i ioredis
+
+# Bull
+
+bull is a popular job and task queue library for Node.js, used for managing distributed jobs and background tasks. It provides features like job scheduling, retries, and priority-based processing. Ideal for handling delayed, recurring, or parallel tasks, bull integrates with Redis for storing job data and managing queues efficiently.
+
+-> npm i bull

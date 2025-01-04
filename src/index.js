@@ -21,16 +21,12 @@ app.listen(PORT, async () => {
   console.log(`Server running on post ${PORT}`);
   connectDB();
 
-
-// // mailer response test 
-//   const mailerResponse = await mailer.sendMail({
-//     from: 'sahuji04082000@gmail.com',
-//     to: 'sahuji04082000@gmail.com',
-//     subject: 'Hello from Nodemailer',
-//     text: 'This is a test email sent using Nodemailer.'
-//   });
-//   console.log('mailerResponse msg', mailerResponse);
-
-
-
+  // // mailer response test
+  //   const mailerResponse = await mailer.sendMail({
+  //     from: 'sahuji04082000@gmail.com',
+  //     to: 'sahuji04082000@gmail.com',
+  //     subject: 'Hello from Nodemailer',
+  //     text: 'This is a test email sent using Nodemailer.'
+  //   });
+  //   console.log('mailerResponse msg', mailerResponse);
 });
