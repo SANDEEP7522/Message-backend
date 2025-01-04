@@ -158,12 +158,20 @@ export const updateWorkspaceController = async (req, res) => {
 
 export const addMemberToWorkspaceController = async (req, res) => {
   try {
+    // console.log('Incoming request data:', {
+    //   workspaceId: req.params.workspaceId,
+    //   memberId: req.body.memberId,
+    //   role: req.body.role,
+    //   user: req.user
+    // });
     const response = await addMemberToWorkspaceService(
       req.params.workspaceId,
       req.body.memberId,
       req.body.role || 'member',
       req.user
     );
+    console.log('reponse from', response);
+
     return res
       .status(StatusCodes.OK)
       .json(
@@ -180,7 +188,6 @@ export const addMemberToWorkspaceController = async (req, res) => {
       .json(internalErrorResponse(error));
   }
 };
-
 export const addChannelToWorkspaceController = async (req, res) => {
   try {
     const response = await addChannelToWorkspaceService(

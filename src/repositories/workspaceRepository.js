@@ -68,7 +68,6 @@ const workspaceRepository = {
       });
     }
 
-    // member already part of workspace
     const isMemberAlreadyPartOfWorkspace = workspace.members.find(
       (member) => member.memberId == memberId
     );
