@@ -76,3 +76,20 @@ You can read about bcrypt in Wikipedia as well as in the following article: How 
 It is a 128-bit number used to uniquely identify information in computer systems. UUIDs are generated using a combination of timestamp, MAC address, and random numbers. They are commonly used in distributed systems to uniquely identify resources, such as database records or network packets.
 
 -> npi i uuid
+
+## nodemailer
+
+Using the email accounts registered with EmailEngine, you can receive and send emails. EmailEngine supports OAuth2, delayed sends, opens and clicks tracking, bounce detection, etc. All on top of regular email accounts without an external MTA service.
+
+-> npm i nodemailer
+
+(https://nodemailer.com/) here you get example of the code
+(https://www.nodemailer.com/usage/using-gmail/) Using Gmail
+
+# documentation
+
+(https://medium.com/@y.mehnati_49486/how-to-send-an-email-from-your-gmail-account-with-nodemailer-837bf09a7628)
+
+# App Password
+
+(https://myaccount.google.com/apppasswords?pli=1&rapt=AEjHL4O5Yk4CrAKFbxjtn4008vndiv_sEgfLr7yIdFHD8STSZEQi0iWGgNh47LcX9q9sKafAHGtHk68_DwuvlvoZbiLm-EAkDQKSrYyUkvePJ0QCkojJ9Fc)

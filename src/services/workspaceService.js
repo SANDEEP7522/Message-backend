@@ -19,12 +19,13 @@ const isUserAdminOfWorkspace = (workspace, userId) => {
   console.log('11111111', response);
   return response;
 };
+//
 export const isUserMemberOfWorkspace = (workspace, userId) => {
   return workspace.members.find(
     (member) => member.memberId.toString() === userId
   );
 };
-
+// is
 const isChannelAlreadyPartOfWorkspace = (workspace, channelName) => {
   return workspace.channels.find(
     (channel) => channel.name.toLowerCase() === channelName.toLowerCase()

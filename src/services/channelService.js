@@ -10,9 +10,9 @@ export const getChannelByIdService = async (channelId, userId) => {
     // get channel with workspace
     const channel =
       await channelRepository.getChannelWithWorkspaceDetails(channelId);
-    console.log( "Chennel 11 line",channel);
+    console.log('Chennel 11 line', channel);
 
-    // check if channel exists 
+    // check if channel exists
     if (!channel || !channel.workspaceId) {
       throw new ClientError({
         message: 'Channel not found with the provided ID',
@@ -32,11 +32,11 @@ export const getChannelByIdService = async (channelId, userId) => {
       throw new ClientError({
         message:
           'User is not a member of the workspace and hence cannot access the channel',
-        explanation: 'User is not a member of the workspace', 
-        statusCode: StatusCodes.UNAUTHORIZED // status code get from http status codes 
+        explanation: 'User is not a member of the workspace',
+        statusCode: StatusCodes.UNAUTHORIZED // status code get from http status codes
       });
     }
-    
+
     return channel;
   } catch (error) {
     console.log('Get channel by ID service error', error);
