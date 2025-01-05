@@ -105,3 +105,9 @@ ioredis is a high-performance Redis client for Node.js, supporting Redis cluster
 bull is a popular job and task queue library for Node.js, used for managing distributed jobs and background tasks. It provides features like job scheduling, retries, and priority-based processing. Ideal for handling delayed, recurring, or parallel tasks, bull integrates with Redis for storing job data and managing queues efficiently.
 
 -> npm i bull
+
+## bull-board
+
+Bull Dashboard is a UI built on top of Bull or BullMQ to help you visualize your queues and their jobs. With this library you get a beautiful UI for visualizing what's happening with each job in your queues, their status and some actions that will enable you to get the job done.
+
+-> npm i bull-board
