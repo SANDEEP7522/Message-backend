@@ -1,6 +1,6 @@
 import express from 'express';
 
-import channelRouter from '../../schema/channelSchema.js';
+import channelRouter from './channelRoute.js';
 import userRouter from './users.js';
 import workspaceRouter from './workspaceRoute.js';
 

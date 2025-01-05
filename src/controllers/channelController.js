@@ -5,7 +5,7 @@ import {
   customErrorResponse,
   internalErrorResponse,
   successResponse
-} from '../utils/common/responseObjects.js';
+} from '../utils/common/responseObject.js';
 
 export const getChannelByIdController = async (req, res) => {
   try {

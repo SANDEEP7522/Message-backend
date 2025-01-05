@@ -9,5 +9,5 @@ export const addMemberToWorkspaceSchema = z.object({
 });
 
 export const addChannelToWorkspaceSchema = z.object({
-  chanelName: z.string()
+  channelName: z.string()
 });
