@@ -7,6 +7,7 @@ import bullServerAdapter from './config/bullBoardConfig.js';
 import connectDB from './config/dbConfig.js';
 // import mailer from './config/mailConfig.js';
 import { PORT } from './config/serverConfig.js';
+import messageHandlers from './controllers/messageSocketController.js';
 import apiRouter from './routes/apiRoutes.js';
 
 const app = express();
@@ -27,15 +28,17 @@ app.get('/ping', (req, res) => {
 
 // Handle incoming socket connections
 io.on('connection', (socket) => {
-  console.log('a user connected', socket.id);
+  // console.log('a user connected', socket.id);
 
   // Handle messages from the client
-  socket.on('messageFromClient', (data) => {
-    console.log('Message from client', data);
+  // socket.on('messageFromClient', (data) => {
+  //  console.log('Message from client', data);
 
-    // Broadcast the message to all clients, converting it to uppercase
-    io.emit('new message', data.toUpperCase());
-  });
+  // Broadcast the message to all clients, converting it to uppercase
+  // io.emit('new message', data.toUpperCase());
+  // });
+
+  messageHandlers(io, socket);
 });
 
 server.listen(PORT, async () => {

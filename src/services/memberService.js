@@ -1,5 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
+import messageRepository from '../repositories/messageRepository.js';
 import userRepository from '../repositories/userRepository.js';
 import workspaceRepository from '../repositories/workspaceRepository.js';
 import ClientError from '../utils/error/clientError.js';
@@ -30,4 +31,11 @@ export const isMemberPartOfWorkspaceService = async (workspaceId, memberId) => {
   const user = await userRepository.getById(memberId);
 
   return user;
+};
+
+//  create the message, and returns the newly created message.
+export const createMessageService = async (message) => {
+  const newMessage = await messageRepository.create(message);
+
+  return newMessage;
 };
