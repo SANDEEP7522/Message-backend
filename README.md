@@ -111,3 +111,9 @@ bull is a popular job and task queue library for Node.js, used for managing dist
 Bull Dashboard is a UI built on top of Bull or BullMQ to help you visualize your queues and their jobs. With this library you get a beautiful UI for visualizing what's happening with each job in your queues, their status and some actions that will enable you to get the job done.
 
 -> npm i bull-board
+
+## Welcome to the Socket.IO
+
+Writing a chat application with popular web applications stacks like LAMP (PHP) has normally been very hard. It involves polling the server for changes, keeping track of timestamps, and it’s a lot slower than it should be.
+
+-> npm install socket.io
