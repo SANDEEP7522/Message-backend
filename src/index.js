@@ -1,7 +1,7 @@
 import express from 'express';
 import { createServer } from 'http';
-import { Server } from 'http';
 import { StatusCodes } from 'http-status-codes';
+import { Server } from 'socket.io';
 
 import bullServerAdapter from './config/bullBoardConfig.js';
 import connectDB from './config/dbConfig.js';
@@ -25,15 +25,20 @@ app.get('/ping', (req, res) => {
   return res.status(StatusCodes.OK).json({ success: true, message: 'pong' });
 });
 
+// Handle incoming socket connections
 io.on('connection', (socket) => {
   console.log('a user connected', socket.id);
+
+  // Handle messages from the client
   socket.on('messageFromClient', (data) => {
     console.log('Message from client', data);
+
+    // Broadcast the message to all clients, converting it to uppercase
     io.emit('new message', data.toUpperCase());
   });
 });
 
-app.listen(PORT, async () => {
+server.listen(PORT, async () => {
   console.log(`Server running on post ${PORT}`);
   connectDB();
 
