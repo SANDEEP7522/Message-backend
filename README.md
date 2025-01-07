@@ -117,3 +117,9 @@ Bull Dashboard is a UI built on top of Bull or BullMQ to help you visualize your
 Writing a chat application with popular web applications stacks like LAMP (PHP) has normally been very hard. It involves polling the server for changes, keeping track of timestamps, and it’s a lot slower than it should be.
 
 -> npm install socket.io
+
+# socket Room
+
+A room is an arbitrary channel that sockets can join and leave. It can be used to broadcast events to a subset of clients:
+
+(https://socket.io/docs/v4/rooms/)
