@@ -2,6 +2,7 @@ import express from 'express';
 import { createServer } from 'http';
 import { StatusCodes } from 'http-status-codes';
 import { Server } from 'socket.io';
+import cors from 'cors';
 
 import bullServerAdapter from './config/bullBoardConfig.js';
 import connectDB from './config/dbConfig.js';
@@ -15,6 +16,9 @@ const app = express();
 
 const server = createServer(app);
 const io = new Server(server);
+
+
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
