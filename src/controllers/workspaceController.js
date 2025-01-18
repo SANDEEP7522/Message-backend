@@ -214,11 +214,21 @@ export const addChannelToWorkspaceController = async (req, res) => {
 };
 
 export const resetWorkspaceJoinCodeController = async (req, res) => {
+
+  
   try {
+
+    console.log('resetWorkspaceJoinCodeController called');
+    console.log('Request Params:', req.params);
+    console.log('Workspace ID:', req.params.workspaceId);
+    console.log('User:', req.user);
+
     const response = await resetWorkspaceJoinCodeService(
       req.params.workspaceId,
       req.user
     );
+    console.log('reset', response);
+
     return res
       .status(StatusCodes.OK)
       .json(

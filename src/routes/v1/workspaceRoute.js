@@ -57,7 +57,7 @@ router.put(
 );
 
 router.put(
-  '/workspaceId/joinCode/reset',
+  '/:workspaceId/joinCode/reset',
   isAuthenticated,
   resetWorkspaceJoinCodeController
 );

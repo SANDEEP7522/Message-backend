@@ -226,7 +226,16 @@ export const updateWorkspaceService = async (
 
 export const resetWorkspaceJoinCodeService = async (workspaceId, userId) => {
   try {
+
+    console.log('resetWorkspaceJoinCodeService called with:');
+    console.log('Workspace ID:', workspaceId);
+    console.log('User ID:', userId);
+
+
     const newJoinCode = uuidv4().substring(0, 6).toUpperCase();
+ 
+    console.log('new join code', newJoinCode);
+
     const updatedWorkspace = await updateWorkspaceService(
       workspaceId,
       {
@@ -234,6 +243,8 @@ export const resetWorkspaceJoinCodeService = async (workspaceId, userId) => {
       },
       userId
     );
+    console.log('updated', updatedWorkspace);
+
     return updatedWorkspace;
   } catch (error) {
     console.log('reset workspace join code service error', error);
