@@ -8,6 +8,7 @@ import {
   getWorkspaceByJoinCodeService,
   getWorkspaceService,
   getWorkspaceUserIsMemberOfService,
+  resetWorkspaceJoinCodeService,
   updateWorkspaceService
 } from '../services/workspaceService.js';
 import {
@@ -211,3 +212,28 @@ export const addChannelToWorkspaceController = async (req, res) => {
       .json(internalErrorResponse(error));
   }
 };
+
+
+export const resetWorkspaceJoinCodeController = async (req, res) => {
+  try {
+    const response = await resetWorkspaceJoinCodeService(
+      req.params.workspaceId,
+      req.user
+    );
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        successResponse(response, 'Reset workspace join code successfully')
+      );
+  } catch (error) {
+    console.log('reset workspace controller error', error);
+    if (error.statusCode) {
+      return res.status(error.statusCode).json(customErrorResponse(error));
+    }
+
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(internalErrorResponse(error));
+  }
+}
+
