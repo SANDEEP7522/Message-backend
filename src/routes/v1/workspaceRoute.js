@@ -56,11 +56,10 @@ router.put(
   addChannelToWorkspaceController
 );
 
-router.put('/workspaceId/joinCode/reset',
+router.put(
+  '/workspaceId/joinCode/reset',
   isAuthenticated,
   resetWorkspaceJoinCodeController
-)
-
-
+);
 
 export default router;

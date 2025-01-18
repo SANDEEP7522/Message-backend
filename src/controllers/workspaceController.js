@@ -213,7 +213,6 @@ export const addChannelToWorkspaceController = async (req, res) => {
   }
 };
 
-
 export const resetWorkspaceJoinCodeController = async (req, res) => {
   try {
     const response = await resetWorkspaceJoinCodeService(
@@ -235,5 +234,4 @@ export const resetWorkspaceJoinCodeController = async (req, res) => {
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json(internalErrorResponse(error));
   }
-}
-
+};
