@@ -52,13 +52,21 @@ export const isAuthenticated = async (req, res, next) => {
   } catch (error) {
     console.error('isAuthenticated middleware Error:', error);
 
+    if (
+      error.name === 'JsonWebTokenError' ||
+      error.name === 'TokenExpiredError'
+    ) {
+      return res.status(StatusCodes.FORBIDDEN).json(
+        customErrorResponse({
+          explanation: 'Invalid token sent by the client',
+          message: 'Authentication Failed'
+        })
+      );
+    }
+
     // Handle other unexpected errors
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(
-      internalErrorResponse({
-        explanation:
-          'An unexpected error occurred in the authentication process',
-        message: 'Internal server error'
-      })
-    );
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json(internalErrorResponse(error));
   }
 };
