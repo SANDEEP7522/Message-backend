@@ -7,9 +7,9 @@ import { internalErrorResponse } from '../utils/common/responseObject.js';
 export const createOrderController = async (req, res) => {
   try {
     const options = {
-      amount: req.body.amount * 100,
+      amount: req.body.amount,
       currency: CURRENCY,
-      receipt: RECEIPT_SECRET,
+      receipt: RECEIPT_SECRET
     };
 
     const order = await razorpay.orders.create(options);
@@ -38,9 +38,9 @@ export const capturePaymentController = async (req, res) => {
     console.log('Request params:', req.body);
 
     return res.status(StatusCodes.OK).json({
-      Success: true,
+      success: true,
       message: 'Payment captured successfully',
-      data: payment
+      data: ''
     });
   } catch (error) {
     console.log('Error in capture payment Controller:', error);
