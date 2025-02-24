@@ -123,3 +123,9 @@ Writing a chat application with popular web applications stacks like LAMP (PHP) 
 A room is an arbitrary channel that sockets can join and leave. It can be used to broadcast events to a subset of clients:
 
 (https://socket.io/docs/v4/rooms/)
+
+# Node.js crypto.createHmac() Method
+
+(https://www.geeksforgeeks.org/node-js-crypto-createhmac-method/?ref=lbp)
+
+The crypto.createHmac() method is used to create an Hmac object that uses the stated ‘algorithm’ and ‘key’.

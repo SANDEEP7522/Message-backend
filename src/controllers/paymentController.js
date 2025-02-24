@@ -46,7 +46,8 @@ export const capturePaymentController = async (req, res) => {
     await updatePaymentStatusService(
       req.body.orderId,
       req.body.status,
-      req.body.paymentId
+      req.body.paymentId,
+      req.body.signature
     );
 
     return res.status(StatusCodes.OK).json({
