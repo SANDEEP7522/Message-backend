@@ -2,6 +2,10 @@ import { StatusCodes } from 'http-status-codes';
 
 import razorpay from '../config/razorpayConfig.js';
 import { CURRENCY, RECEIPT_SECRET } from '../config/serverConfig.js';
+import {
+  createPaymentService,
+  updatePaymentStatusService
+} from '../services/paymentService.js';
 import { internalErrorResponse } from '../utils/common/responseObject.js';
 
 export const createOrderController = async (req, res) => {
@@ -15,6 +19,8 @@ export const createOrderController = async (req, res) => {
     const order = await razorpay.orders.create(options);
 
     console.log('order...', order);
+
+    await createPaymentService(order.id, req.body.amount);
 
     if (!order) {
       throw new Error('Failed to cretated');
@@ -36,6 +42,12 @@ export const createOrderController = async (req, res) => {
 export const capturePaymentController = async (req, res) => {
   try {
     console.log('Request params:', req.body);
+
+    await updatePaymentStatusService(
+      req.body.orderId,
+      req.body.status,
+      req.body.paymentId
+    );
 
     return res.status(StatusCodes.OK).json({
       success: true,
